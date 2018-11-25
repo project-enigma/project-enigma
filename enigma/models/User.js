@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 
 const { Schema }   = mongoose;
+require('dotenv').config();
 
 const userSchema = new Schema({
-  username: String,
+  username: {type: String, unique: true},
   password: String,
+  email: {type: String, unique: true},
+  imgName: {type: String, default: "defaultProfile.png"},
+  imgPath: {type: String, default: process.env.CLOUDINARY_DEFAULTPROFILE_IMG },
+  trips: {type: Array},
+  friends: {type: Array},
 }, {
   timestamps: {
     createdAt: 'created_at',
