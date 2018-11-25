@@ -5,6 +5,9 @@ const { Schema }   = mongoose;
 const userSchema = new Schema({
   username: String,
   password: String,
+  email: {type: String, unique: true},
+  imgName: {type: String},
+  imgPath: {type: String}
 }, {
   timestamps: {
     createdAt: 'created_at',
