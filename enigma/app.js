@@ -87,8 +87,8 @@ const tripsRoutes = require('./routes/trips');
 
 app.use('/trips', tripsRoutes);
 
-// const socialRoutes = require('./routes/social');
+const socialRoutes = require('./routes/social');
 
-// app.use('/social', socialRoutes);
+app.use('/social', socialRoutes);
 
 module.exports = app;
