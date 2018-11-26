@@ -21,7 +21,6 @@ socialRouter.get('/settings', (req, res, next) => {
 
 socialRouter.post('/settings', uploadCloud.single('photo'), (req, res, next) => {
   const userId = req.body.userid;
-  console.log(userId);
   const myUser = {};
 
   if (req.body.email) {
@@ -43,13 +42,32 @@ socialRouter.post('/settings', uploadCloud.single('photo'), (req, res, next) => 
     myUser.imgName = req.file.originalname;
   }
 
-  console.log(myUser);
   User.findByIdAndUpdate(userId,  myUser, { new:true })
     .then((user) => {
-      console.log(user);
       res.redirect('/social/profile');
     })
     .catch(error => console.log(`${error} in profile/settings`));
+});
+
+socialRouter.get('/friends', (req, res, next) => {
+  res.render('social/friends');
+});
+
+socialRouter.post('/friends', (req, res, next) => {
+  const userId = req.body.userid;
+  const friendUsername = req.body.friendUsernme;
+  if (friendUsername === '') {
+    res.render('social/friends', { message: 'Here you should write your friends username' });
+  }
+  User.findOne({ username: friendUsername })
+    .then((friend) => {
+      console.log(friend);
+      // res.redirect('/social/profile');
+      User.findByIdAndUpdate(userId, { $addToSet: { friends: friend.id } })
+        .then(() => res.redirect('/social/friends'))
+        .catch(err => next(err));
+    })
+    .catch(error => console.log(`${error} in profile/friends`));
 });
 
 

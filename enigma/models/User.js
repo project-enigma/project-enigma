@@ -10,8 +10,8 @@ const userSchema = new Schema({
   email: { type: String, unique: true },
   imgName: { type: String, default: 'defaultProfile.png' },
   imgPath: { type: String, default: process.env.CLOUDINARY_DEFAULTPROFILE_IMG },
-  trips: { type: Array },
-  friends: { type: Array },
+  trips: [{ type: Schema.Types.ObjectId }],
+  friends: [{ type: Schema.Types.ObjectId }],
 }, {
   timestamps: {
     createdAt: 'created_at',
