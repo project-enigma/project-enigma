@@ -6,11 +6,11 @@ require('dotenv').config();
 const TripSchema = new Schema({
   from: { type: String },
   to: { type: String },
-  description: { type: String },
-  price: { type: Schema.Types.Decimal128 },
+  tips: { type: String },
+  price: { type: Number },
   depart: { type: Date },
   return: { type: Date },
-  users: { type: Array },
+  users: { type: Array, default: [] },
 });
 
 const Trip = mongoose.model('Trip', TripSchema);
