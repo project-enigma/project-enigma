@@ -1,13 +1,15 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js"></script>
+<script>
+  const a = moment('2016-01-02').format('LLL')
+  console.log(a)
+</script>
 <div class="mysteries">
 {{#each trips}}
 <div class="mystery">
-  <p>{{this.from}}</p>
+  <p>From: {{this.from}}</p>
+  <p>Depart: {{this.depart}}</p>
+  <p>Return: {{this.return}}</p>
   <p>{{this.price}}€</p>
-  <p>{{this.depart}}</p>
 </div>
 {{/each}}
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/af.js"></script>
-<script>
-    moment().format("LLL");
-</script>
