@@ -83,9 +83,12 @@ const authRoutes = require('./routes/auth');
 
 app.use('/auth', authRoutes);
 
-//const socialRoutes = require('./routes/social');
+const tripsRoutes = require('./routes/trips');
 
-//app.use('/social', socialRoutes);
+app.use('/trips', tripsRoutes);
 
+const socialRoutes = require('./routes/social');
+
+app.use('/social', socialRoutes);
 
 module.exports = app;
