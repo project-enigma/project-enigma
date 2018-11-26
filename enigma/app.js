@@ -5,10 +5,12 @@ const cookieParser = require('cookie-parser');
 const express      = require('express');
 const favicon      = require('serve-favicon');
 const hbs          = require('hbs');
+const moment       = require('moment');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
-const session    = require('express-session');
+const session      = require('express-session');
 const path         = require('path');
+
 
 const MongoStore = require('connect-mongo')(session);
 const flash      = require('connect-flash');
@@ -55,6 +57,14 @@ hbs.registerHelper('ifUndefined', (value, options) => {
     return options.inverse(this);
   }
   return options.fn(this);
+});
+
+hbs.registerHelper('formatDate', (datetime) => {
+  if (moment) {
+    return moment(datetime).format('lll');
+  }
+
+  return datetime;
 });
 
 // Enable authentication using session + passport
