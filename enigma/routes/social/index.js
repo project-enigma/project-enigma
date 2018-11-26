@@ -19,8 +19,9 @@ socialRouter.get('/settings', (req, res, next) => {
   res.render('social/settings');
 });
 
-socialRouter.post('/settings', (req, res, next) => {
+socialRouter.post('/settings', uploadCloud.single('photo'), (req, res, next) => {
   const userId = req.body.userid;
+  console.log(userId);
   const myUser = {};
 
   if (req.body.email) {
@@ -37,16 +38,18 @@ socialRouter.post('/settings', (req, res, next) => {
     myUser.password = hashPass;
   }
 
-  if (req.body.photo) {
-    myUser.imgPath = req.file.path;
+  if (req.file) {
+    myUser.imgPath = req.file.url;
     myUser.imgName = req.file.originalname;
   }
 
-
-  User.findByIdAndUpdate(userId, { myUser })
-    .then()
-    .catch();
-  res.render('social/settings');
+  console.log(myUser);
+  User.findByIdAndUpdate(userId,  myUser, { new:true })
+    .then((user) => {
+      console.log(user);
+      res.redirect('/social/profile');
+    })
+    .catch(error => console.log(`${error} in profile/settings`));
 });
 
 
