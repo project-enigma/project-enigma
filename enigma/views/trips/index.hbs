@@ -1,0 +1,13 @@
+<div class="mysteries">
+{{#each trips}}
+<div class="mystery">
+  <p>{{this.from}}</p>
+  <p>{{this.price}}€</p>
+  <p>{{this.depart}}</p>
+</div>
+{{/each}}
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/af.js"></script>
+<script>
+    moment().format("LLL");
+</script>
