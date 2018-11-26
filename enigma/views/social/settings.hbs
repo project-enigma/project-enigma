@@ -7,7 +7,7 @@
 </aside>
 
 <section>
-  <form action="/success" method="post" enctype="multipart/form-data">
+  <form action="" method="post" enctype="multipart/form-data">
   <div>
     <label>Email</label>
     <input type="email" name="email">
@@ -20,8 +20,11 @@
     <label>Password</label>
     <input type="password" name="password">
   </div>
+  <div>
   <label>Avatar</label>
   <input type="file" name="photo">
   <input type="text" name="userid" value="{{user.id}}" hidden>
+  </div>
+  <input type="submit" value="SAVE CHANGES">
   </form>
 </section>
