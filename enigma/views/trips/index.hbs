@@ -1,6 +1,7 @@
 <div class="mysteries">
 {{#each trips}}
-<div class="mystery" onclick="location.href='/trips/{{this.id}}'">
+<div class="mystery" onclick="location.href='/trips/buy/{{this.id}}'">
+<h4>{{this.name}}</h4>
   <p>OR: {{this.from}}</p>
   <p>Depart: {{formatDate this.depart}} </p>
   <p>Return: {{formatDate this.return}} </p>
