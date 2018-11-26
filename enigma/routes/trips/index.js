@@ -6,6 +6,8 @@ const Trip = require('../../models/Trip');
 
 const express = require('express');
 
+const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
+
 const tripsRouter = express.Router();
 
 
@@ -15,20 +17,20 @@ tripsRouter.get('/', (req, res, next) => {
     .catch(err => next(err));
 });
 
-tripsRouter.get('/buy/:id', (req, res, next) => {
+tripsRouter.get('/buy/:id', ensureLoggedIn('/auth/login'), (req, res, next) => {
   Trip.findById(req.params.id)
     .then(trip => res.render('trips/buy', { trip }))
     .catch(err => next(err));
 });
 
 
-tripsRouter.get('/buy/:id/success', (req, res, next) => {
+tripsRouter.get('/buy/:id/success', ensureLoggedIn('/auth/login'), (req, res, next) => {
   Trip.findById(req.params.id)
     .then(trip => res.render('trips/success', { trip }))
     .catch(err => next(err));
 });
 
-tripsRouter.post('/buy/:id', (req, res, next) => {
+tripsRouter.post('/buy/:id', ensureLoggedIn('/auth/login'), (req, res, next) => {
   Trip.findByIdAndUpdate(req.params.id, { $addToSet: { users: req.user.id } })
     .then(() => res.redirect(`/trips/buy/${req.params.id}/success`))
     .catch(err => next(err));
