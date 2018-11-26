@@ -18,5 +18,9 @@
     <input type="submit" value="Add">
   </div>
   </form>
-  <h3>Here will be shown list of your friends</h3>
+  
+  {{#each myUser.friends}}
+  <img src="{{this.imgPath}}" alt="" style="width:100px;height:100px;">
+  <p>{{this.username}}</p>
+  {{/each}}
 </section>

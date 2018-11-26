@@ -2,6 +2,7 @@
 const User = require('../../models/User');
 const uploadCloud = require('../../config/cloudinary.js');
 const express = require('express');
+const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
 const passport = require('passport');
 const bcrypt = require('bcrypt');
@@ -11,15 +12,15 @@ const bcryptSalt = 10;
 const socialRouter = express.Router();
 
 
-socialRouter.get('/profile', (req, res, next) => {
+socialRouter.get('/profile', ensureLoggedIn('/auth/login'), (req, res, next) => {
   res.render('social/profile');
 });
 
-socialRouter.get('/settings', (req, res, next) => {
+socialRouter.get('/settings', ensureLoggedIn('/auth/login'), (req, res, next) => {
   res.render('social/settings');
 });
 
-socialRouter.post('/settings', uploadCloud.single('photo'), (req, res, next) => {
+socialRouter.post('/settings', [ensureLoggedIn('/auth/login'), uploadCloud.single('photo')], (req, res, next) => {
   const userId = req.body.userid;
   const myUser = {};
 
@@ -49,11 +50,17 @@ socialRouter.post('/settings', uploadCloud.single('photo'), (req, res, next) => 
     .catch(error => console.log(`${error} in profile/settings`));
 });
 
-socialRouter.get('/friends', (req, res, next) => {
-  res.render('social/friends');
+socialRouter.get('/friends', ensureLoggedIn('/auth/login'), (req, res, next) => {
+  const userId = req.user.id;
+  User.findById(userId)
+    .populate('friends')
+    .then((myUser) => {
+      res.render('social/friends', { myUser });
+    })
+    .catch(err => next(err));
 });
 
-socialRouter.post('/friends', (req, res, next) => {
+socialRouter.post('/friends', ensureLoggedIn('/auth/login'), (req, res, next) => {
   const userId = req.body.userid;
   const friendUsername = req.body.friendUsernme;
   if (friendUsername === '') {
@@ -61,7 +68,6 @@ socialRouter.post('/friends', (req, res, next) => {
   }
   User.findOne({ username: friendUsername })
     .then((friend) => {
-      console.log(friend);
       // res.redirect('/social/profile');
       User.findByIdAndUpdate(userId, { $addToSet: { friends: friend.id } })
         .then(() => res.redirect('/social/friends'))
