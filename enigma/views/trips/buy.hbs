@@ -1,0 +1,21 @@
+<aside class="pricing">
+  <p>{{trip.name}}</p>
+  <p>{{trip.price}}€</p>
+  <br>
+  <p>Total: {{trip.price}}€</p>
+</aside>
+<form action="/trips/buy/{{trip.id}}" method="post">
+<label for="">Full Name: </label><input name="fullname" type="text">
+<label for="phone">Phone Number: </label><input type="number" name="phone">
+<label for="email">E-mail: </label><input type="email" name="email">
+<label for="address">Address: </label><input type="text" name="address">
+<br>
+<label for="creditcard">Credit Card: </label>
+<div class="creditcard">
+  <label for="ccname">Name: </label><input name="ccName" type="text">
+  <label for="ccNum">Card Number: </label><input name="ccNum" type="Number">
+  <label for="ccDate">Caducity: </label><input name="ccDate" type="text">
+  <label for="csv">CSV: </label><input name="csv" type="number">
+</div>
+<button type="submit">Buy</button>
+</form>

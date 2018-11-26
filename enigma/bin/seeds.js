@@ -21,6 +21,7 @@ mongoose
 
 const trips = [
   {
+    name: 'Mystery Trip #1',
     from: 'Madrid',
     to: 'Budapest',
     tips: 'Classic',
@@ -29,6 +30,7 @@ const trips = [
     return: '2018-12-17 08:00',
   },
   {
+    name: 'Mystery Trip #2',
     from: 'Madrid',
     to: 'Bangkok',
     tips: 'Get ready for the jungle...',
@@ -37,6 +39,7 @@ const trips = [
     return: '2019-01-14 09:00',
   },
   {
+    name: 'Mystery Trip #3',
     from: 'Madrid',
     to: 'Los Angeles',
     tips: 'Top tier production!',
@@ -45,6 +48,7 @@ const trips = [
     return: '2019-02-06 17:00',
   },
   {
+    name: 'Mystery Trip #4',
     from: 'Barcelona',
     to: 'Oslo',
     tips: 'It\'s cold out there, bring a coat!',
@@ -53,6 +57,7 @@ const trips = [
     return: '2019-01-28 08:00',
   },
   {
+    name: 'Mystery Trip #5',
     from: 'Barcelona',
     to: 'Berlin',
     tips: 'Hearth of the culture',
@@ -61,6 +66,7 @@ const trips = [
     return: '2018-12-21 01:00',
   },
   {
+    name: 'Mystery Trip #6',
     from: 'Barcelona',
     to: 'Tokyo',
     tips: 'The dreamland',
