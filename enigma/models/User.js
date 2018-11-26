@@ -1,7 +1,8 @@
+require('dotenv').config();
+
 const mongoose = require('mongoose');
 
 const { Schema }   = mongoose;
-require('dotenv').config();
 
 const userSchema = new Schema({
   username: { type: String, unique: true },
