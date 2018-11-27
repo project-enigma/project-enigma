@@ -37,6 +37,7 @@ const trips = [
     price: 453,
     depart: '2019-01-10 08:00',
     return: '2019-01-14 09:00',
+    tickets: 0,
   },
   {
     name: 'Mystery Trip #3',
