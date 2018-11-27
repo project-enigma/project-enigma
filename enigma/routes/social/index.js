@@ -44,10 +44,8 @@ socialRouter.post('/settings', [ensureLoggedIn('/auth/login'), uploadCloud.singl
   }
 
   User.findByIdAndUpdate(userId,  myUser, { new:true })
-    .then((user) => {
-      res.redirect('/social/profile');
-    })
-    .catch(error => console.log(`${error} in profile/settings`));
+    .then(() => res.redirect('/social/profile'))
+    .catch(err => console.log(`${err} in profile/settings`));
 });
 
 socialRouter.get('/friends', ensureLoggedIn('/auth/login'), (req, res, next) => {
@@ -55,25 +53,30 @@ socialRouter.get('/friends', ensureLoggedIn('/auth/login'), (req, res, next) => 
   User.findById(userId)
     .populate('friends')
     .then((myUser) => {
-      res.render('social/friends', { myUser });
+      res.render('social/friends', { myUser, error: req.session.error });
+      delete req.session.error;
     })
     .catch(err => next(err));
 });
 
 socialRouter.post('/friends', ensureLoggedIn('/auth/login'), (req, res, next) => {
   const userId = req.body.userid;
-  const friendUsername = req.body.friendUsernme;
+  const { friendUsername } = req.body;
   if (friendUsername === '') {
-    res.render('social/friends', { message: 'Here you should write your friends username' });
+    req.session.error = 'Here you should write your friend\'s username';
+    res.redirect('/social/friends');
   }
   User.findOne({ username: friendUsername })
     .then((friend) => {
-      // res.redirect('/social/profile');
       User.findByIdAndUpdate(userId, { $addToSet: { friends: friend.id } })
+        .populate('friends')
         .then(() => res.redirect('/social/friends'))
         .catch(err => next(err));
     })
-    .catch(error => console.log(`${error} in profile/friends`));
+    .catch(() => {
+      req.session.error = 'The username doesn\'t exists';
+      res.redirect('/social/friends');
+    });
 });
 
 

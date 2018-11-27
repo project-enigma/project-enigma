@@ -10,9 +10,9 @@
   <form action="" method="post">
   <div>
     <label>Find friend</label>
-    <input type="text" name="friendUsernme">
-    {{#if message }}
-  <div class="error-message">{{ message }}</div>
+    <input type="text" name="friendUsername">
+    {{#if error }}
+  <div class="error-message">{{ error }}</div>
   {{/if}}
     <input type="text" name="userid" value="{{user.id}}" hidden>
     <input type="submit" value="Add">
