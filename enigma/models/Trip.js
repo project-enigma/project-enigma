@@ -11,6 +11,7 @@ const TripSchema = new Schema({
   price: { type: Number },
   depart: { type: Date },
   return: { type: Date },
+  tickets: { type: Number, default: 30 },
   users: [{ type: Schema.Types.ObjectId }],
 });
 
