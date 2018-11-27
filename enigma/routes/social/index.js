@@ -13,7 +13,15 @@ const socialRouter = express.Router();
 
 
 socialRouter.get('/profile', ensureLoggedIn('/auth/login'), (req, res, next) => {
-  res.render('social/profile');
+  const myEnv = process.env;
+  res.render('social/profile', { myEnv });
+});
+
+socialRouter.get('/getTrips', (req, res, next) => {
+  User.findById(req.user)
+    .populate('reviews')
+    .then(myUser => res.json({ myUser }))
+    .catch(err => next(err));
 });
 
 socialRouter.get('/settings', ensureLoggedIn('/auth/login'), (req, res, next) => {
@@ -77,6 +85,14 @@ socialRouter.post('/friends', ensureLoggedIn('/auth/login'), (req, res, next) =>
       req.session.error = 'The username doesn\'t exists';
       res.redirect('/social/friends');
     });
+});
+
+socialRouter.get('/chat', ensureLoggedIn('/auth/login'), (req, res, next) => {
+  const userName = req.user.username;
+  const userAll = req.user;
+  res.render('social/chat', {
+    user:userName, userAll, CHATENGINE_PUBLISH_KEY:process.env.CHATENGINE_PUBLISH_KEY, CHATENGINE_SUB_KEY : process.env.CHATENGINE_SUB_KEY,
+  });
 });
 
 
