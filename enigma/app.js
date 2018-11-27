@@ -67,6 +67,8 @@ hbs.registerHelper('formatDate', (datetime) => {
   return datetime;
 });
 
+hbs.registerHelper('json', context => JSON.stringify(context));
+
 // Enable authentication using session + passport
 app.use(session({
   secret: 'irongenerator',
