@@ -261,3 +261,36 @@ margin: 100px 0 100px 0;
  
   color: #636363;
 }
+
+
+//login
+
+.login-form{
+  background-color:  #9359FF;
+  width: 40%;
+  height: auto; 
+  border-radius:30px;
+  margin-top:180px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  background-image: url("../images/login-img.jpg");
+  background: contain no-repeat center;
+  padding: 10%;
+
+}
+.login{
+width: 100%;
+height: auto;
+display: flex;
+justify-content: center;
+
+
+
+}
+.logo-login{
+  width: 200px;
+  height: 200px;
+}
