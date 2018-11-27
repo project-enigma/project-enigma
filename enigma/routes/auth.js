@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const passport = require('passport');
 
@@ -6,6 +8,7 @@ const User = require('../models/User');
 
 // Bcrypt to encrypt passwords
 const bcrypt = require('bcrypt');
+const { ensureLoggedIn, ensureLoggedOut } = require('connect-ensure-login');
 
 const bcryptSalt = 10;
 
@@ -45,9 +48,9 @@ router.get('/signup', (req, res, next) => {
 });
 
 router.post('/signup', (req, res, next) => {
-  const { username, password } = req.body;
-  if (username === '' || password === '') {
-    res.render('auth/signup', { message: 'Indicate username and password' });
+  const { username, password, email } = req.body;
+  if (username === '' || password === '' || email === '') {
+    res.render('auth/signup', { message: 'All fields are mandatory' });
     return;
   }
 
@@ -61,6 +64,7 @@ router.post('/signup', (req, res, next) => {
     const hashPass = bcrypt.hashSync(password, salt);
 
     const newUser = new User({
+      email,
       username,
       password: hashPass,
     });
