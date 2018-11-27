@@ -22,5 +22,10 @@
   {{#each myUser.friends}}
   <img src="{{this.imgPath}}" alt="" style="width:100px;height:100px;">
   <p>{{this.username}}</p>
+  <button><a href="/social/chat">Chat</a></button>
   {{/each}}
 </section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+
