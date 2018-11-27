@@ -5,17 +5,19 @@ const cookieParser = require('cookie-parser');
 const express      = require('express');
 const favicon      = require('serve-favicon');
 const hbs          = require('hbs');
+const moment       = require('moment');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
-const session    = require('express-session');
+const session      = require('express-session');
 const path         = require('path');
+
 
 const MongoStore = require('connect-mongo')(session);
 const flash      = require('connect-flash');
 
 
 mongoose
-  .connect('mongodb://localhost/enigma', { useNewUrlParser: true })
+  .connect(process.env.DBURL, { useNewUrlParser: true })
   .then((x) => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`);
   })
@@ -57,6 +59,16 @@ hbs.registerHelper('ifUndefined', (value, options) => {
   return options.fn(this);
 });
 
+hbs.registerHelper('formatDate', (datetime) => {
+  if (moment) {
+    return moment(datetime).format('lll');
+  }
+
+  return datetime;
+});
+
+hbs.registerHelper('json', context => JSON.stringify(context));
+
 // Enable authentication using session + passport
 app.use(session({
   secret: 'irongenerator',
@@ -83,5 +95,12 @@ const authRoutes = require('./routes/auth');
 
 app.use('/auth', authRoutes);
 
+const tripsRoutes = require('./routes/trips');
+
+app.use('/trips', tripsRoutes);
+
+const socialRoutes = require('./routes/social');
+
+app.use('/social', socialRoutes);
 
 module.exports = app;
